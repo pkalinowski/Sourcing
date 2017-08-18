@@ -29,7 +29,9 @@
 import Foundation
 
 /**
- `ArrayDataProvider` provides basic implementation to map arrays to an `DataProvider`.
+ Takes two dimensional arrays any wraps them into an `DataProvider`. It also handls one dimensional `Collection` types. One can changes its contents by using one of the `reconfigure:` methods.
+ 
+ It supports user initiated modication of the contents stored by implementing `DataModifying`.
  */
 open class ArrayDataProvider<Element>: ArrayDataProviding, DataModifying {
     
@@ -43,9 +45,6 @@ open class ArrayDataProvider<Element>: ArrayDataProviding, DataModifying {
     open var headerTitles: [String]?
     open var sectionIndexTitles: [String]?
    
-    public var canMoveItems: Bool = false
-    public var canDeleteItems: Bool = false
-    
     // MARK: Initializers
     
     /**
@@ -71,6 +70,9 @@ open class ArrayDataProvider<Element>: ArrayDataProviding, DataModifying {
         self.sectionIndexTitles = sectionIndexTitles
         self.headerTitles = headerTitles
     }
+    
+    // MARK: Reconfiguring contents
+    
     /**
      Reconfigures the dataSource with new data.
      
@@ -102,6 +104,10 @@ open class ArrayDataProvider<Element>: ArrayDataProviding, DataModifying {
     }
     
     // MARK: Data Modification
+    
+    public var canMoveItems: Bool = false
+    public var canDeleteItems: Bool = false
+
     
     open func canMoveItem(at indexPath: IndexPath) -> Bool {
         return canMoveItems
